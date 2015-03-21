@@ -1,0 +1,66 @@
+{% extends 'admin/base.html' %}
+
+{%block sidebar %}
+{% include "admin/include/sidebar.html" %}
+{% endblock %}
+{%block container %}
+<div class="row thick-underline">
+    <div class="col-xs-11">
+        <h3>Users</h3>
+    </div>
+    <div class="col-xs-1">
+        <h3>
+            <a href="{{base_url}}admin/users/add">
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
+        </h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <table class="table table-responsive">
+            <tr>
+                <th width="10%">Id</th>
+                <th>Username</th>
+                <th>Name</th>
+                <th>E-Mail</th>
+                <th width="20%">Action</th>
+            </tr>
+            {% for user in users %}
+            <tr id="user_{{user.id}}">
+                <td>{{user.id}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td>
+                    <a href="{{base_url}}admin/users/edit/{{user.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a href="{{base_url}}admin/users/del/{{user.id}}" class="del" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-remove"></span></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="{{ base_url }}/template/js/admin.js"></script>
+<script type="text/javascript">
+    $('#myModal').on('loaded.bs.modal', function(e){
+        watchers();
+    });
+    function watchers(){
+        $(".save").click(function(e){
+            uid = $(this).attr('data-user-id');
+            $('#user_'+uid).remove();
+            save_data(this);
+        });
+        $("#del_user").on("saved", function(e, data){
+            $(this).parent().parent().html(data);
+            watchers();
+        });
+    }
+    $('#myModal').on('hidden.bs.modal',function(e){
+        $('#myModal').removeData('bs.modal');
+    });
+</script>
+{% endblock %}

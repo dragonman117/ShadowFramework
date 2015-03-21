@@ -1,0 +1,11 @@
+.info h4{   
+    max-width: 423px;
+}
+.info table{
+       margin-left: 0px !important;
+    width: 390px;
+}
+.info{
+    overflow-x: hidden;
+    min-width: 463;
+}

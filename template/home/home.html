@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+{% block sidebar %}
+    {% include "include/sidebar.html" %}
+{% endblock %}
+{%block container %}
+<h2 class="underline">Welcome</h2>
+<div class="row">
+    <div class="col-xs-12">
+        Welcome to the Shadow Frameworks. Our goal is to provide a basis for you to build your own creations on. It provides
+        a core template with several files to help you focus on what is important, your code. There is a skeleton
+        admin section provided at <a href="{{base_url}}admin">{{full_url}}admin</a> (username is admin, password adminadmin). All views inherit the controller
+        class which provides the tools to easily pass information to your views (stored in template). The model class provides
+        easy access to the database, allowing you to focus more on manipulating and analyzing data over writing querys.
+        And the best thing is, it is all written to help you organize code into a very modular MVC system so that you
+        can reuse/change different elements with little to no hassle. I hope you enjoy the frameworks, If you end up
+        using and liking it please credit me.<br/>
+        Thanks, TJ Ferrell<br/><br/>
+        <h4 class="underline">Special Thanks</h4>
+        <ul>
+            <li>Django: The project that introduced me to proper website structure</li>
+            <li>Twig by Sensys: The most beautiful php template library i've ever seen</li>
+            <li>UFlex by Pablo Tejada: The project that taught me the basics of authentication systems</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

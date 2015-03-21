@@ -1,0 +1,10 @@
+<IfModule mod_rewrite.c>
+   RewriteEngine on
+   RewriteCond %{REQUEST_FILENAME} !-f
+   RewriteRule (.*) index.php
+</IfModule>
+<FilesMatch "\.(ttf|otf|eot|woff)$">
+  <IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+  </IfModule>
+</FilesMatch>

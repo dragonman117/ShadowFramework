@@ -1,0 +1,131 @@
+{% extends 'admin/base.html' %}
+
+{%block sidebar %}
+{% include "admin/include/sidebar.html" %}
+{% endblock %}
+
+{%block container%}
+<form action="" method="post" role="form" class="form-horizontal">
+    <div class="row thick-underline">
+        <div class=" col-xs-10">
+            <h3>{{type}} User</h3>
+        </div>
+        <div class=" col-xs-2">
+            <h3>
+                <button type="submit" class="btn btn-success "><span class="glyphicon glyphicon-floppy-save"></span></button>
+            </h3>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <h4 class="underline">Account Information</h4>
+        {% if error %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Error!</strong> {{error.msg}}<br/>
+            {% if error.password == 4 %}
+            Passwords must be more than 8 characters.
+            {% endif %}
+        </div>
+        {% endif %}
+        {% if sucess %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {% if sucess == 1 %}
+            <strong>Sucess!</strong> User added successfully continue editing this user <a href="{{base_url}}admin/users/edit/{{id}}">here</a>.
+            {% else %}
+            <strong>Sucess!</strong> User updated successfully.
+            {% endif %}
+        </div>
+        {% endif %}
+        <div class="form-group {%if error.username%}has-error{%endif%}">
+            <label for="name" class="col-sm-4 control-label"><span class="req">*</span>Username:</label>
+            <div class="col-sm-7 left-inner-addon">
+                <i class="glyphicon glyphicon-user"></i>
+                <input type="input" class="form-control" name="username" value="{{username}}" placeholder="Username"/>
+                {% if id %}
+                <input type="hidden" name="id" value="{{id}}"/>
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-group {%if error.name%}has-error{%endif%}">
+            <label for="name" class="col-sm-4 control-label"><span class="req">*</span>Name:</label>
+            <div class="col-sm-7 left-inner-addon">
+                <i class="glyphicon glyphicon-user"></i>
+                <input type="input" class="form-control" name="name" value="{{name}}" placeholder="Name"/>
+            </div>
+        </div>
+        <div class="form-group {%if error.email%}has-error{%endif%}">
+            <label for="username" class="col-sm-4 control-label"><span class="req">*</span>E-Mail:</label>
+            <div class="col-sm-7 left-inner-addon">
+                <i class="glyphicon glyphicon-envelope"></i>
+                <input type="input" class="form-control" name="email" value="{{email}}" placeholder="E-Mail"/>
+            </div>
+        </div>
+        {% if reg_date %}
+        <div class="form-group">
+            <label for="username" class="col-sm-4 control-label">Activation Date:</label>
+            <div class="col-sm-7 left-inner-addon">
+                <i class="glyphicon glyphicon-calendar"></i>
+                <input type="input" class="form-control" placeholder="{{reg_date|date("m-d-Y")}}" readonly/>
+            </div>
+        </div>
+        {% endif %}
+        {% if password and id %}
+        <div class="form-group {%if error.password %}has-error{%endif%}">
+            <label for="username" class="col-sm-4 control-label">Password:</label>
+            <div class="col-sm-7 left-inner-addon">
+                <i class="glyphicon glyphicon-lock"></i>
+                <a href="{{base_url}}admin/users/udPassword/{{id}}" class="btn btn-primary pad_left" data-toggle="modal" data-target="#myModal">Change Password</a>
+            </div>
+        </div>
+        {% else %}
+        <div class="form-group {%if error.password %}has-error{%endif%}">
+            <label for="username" class="col-sm-4 control-label"><span class="req">*</span>Password:</label>
+            <div class="col-sm-7 left-inner-addon">
+                <i class="glyphicon glyphicon-lock"></i>
+                <input type="password" class="form-control" name="password" placeholder="Password" />
+            </div>
+        </div>
+        <div class="form-group {%if error.password %}has-error{%endif%}">
+            <label for="username" class="col-sm-4 control-label"><span class="req">*</span>Password Conformation:</label>
+            <div class="col-sm-7 left-inner-addon">
+                <i class="glyphicon glyphicon-lock"></i>
+                <input type="password" class="form-control" name="password2" placeholder="Password Conformation" />
+            </div>
+        </div>
+        {% endif %}
+        <div class="form-group {%if error.auth_level%}has-error{%endif%}">
+            <label for="username" class="col-sm-4 control-label"><span class="req">*</span>User Group:</label>
+            <div class="col-sm-7 left-inner-addon">
+                <select name="auth_level" class="form-control">
+                    <option value="0" ></option>
+                    <option value="100" {% if auth_level == 100 %} selected="selected"{% endif %}>Registered</option>
+                    <option value="500" {% if auth_level == 500 %} selected="selected"{% endif %}>Author</option>
+                    <option value="1000" {% if auth_level == 1000 %} selected="selected"{% endif %}>Admin</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="{{ base_url }}/template/js/admin.js"></script>
+<script type="text/javascript">
+    $('#myModal').on('loaded.bs.modal', function(e){
+        watchers();
+    });
+    function watchers(){
+        $(".save").click(function(e){
+            save_data(this);
+        });
+        $("#change_pass").on("saved", function(e, data){
+            $(this).parent().parent().html(data);
+            watchers();
+        });
+    }
+    $('#myModal').on('hidden.bs.modal',function(e){
+        $('#myModal').removeData('bs.modal');
+    });
+</script>
+
+{% endblock %}
