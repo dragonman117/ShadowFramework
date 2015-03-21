@@ -24,6 +24,9 @@ Get up and running:
 
 Get up and running (Complete Noob):
 1. Install XAMPP
+
 2. Copy ShadowFramework to html folder
+
 3. Go to localhost/phpmyadmin and import the sql file
+
 4. Check that lines 71/72 in core/settings.php show the proper directory name.
