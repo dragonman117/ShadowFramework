@@ -80,7 +80,8 @@ class Model{
     
     //Pagination
     function page_count($page=1, $and=''){
-        $ppc = $GLOBALS['ipp'];
+        global $SETTINGS;
+        $ppc = $SETTINGS['ipp'];
         $results = array();
         $articles = $this->count($and);
         //Get the maximum number of pages
@@ -98,7 +99,8 @@ class Model{
     }
     
     function get_page($page, $and = '',  $field='id', $sort = 'DESC', $extra = ''){
-        $ppc = $GLOBALS['ipp'];
+        global $SETTINGS;
+        $ppc = $SETTINGS['ipp'];
         $start = $ppc * ($page-1);
         $and = " {$and} ORDER BY `{$field}` {$sort} {$extra} LIMIT {$start}, {$ppc}";
         return $this->get_all($and);

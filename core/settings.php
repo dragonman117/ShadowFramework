@@ -49,6 +49,12 @@ $SETTINGS = array(
      * List the root template directory that all other templates is stored in
      */
     'template_base'=>"template",
+
+    /*
+     * Items per page
+     * This is the pagination value for how many items to show per page on a pagination page
+     */
+    'ipp' => 10,
 );
 
 /*
